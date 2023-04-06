@@ -8,6 +8,7 @@ def disp_viz(*args):
               [sg.Text()]]
     
     window = sg.Window('MagneSight', layout,size=(700,500),alpha_channel=0.85)
+    window.set_icon(r'C:\Users\LENOVO\Desktop\ds-proj\code\aa.ico')
 
 
     while True:
