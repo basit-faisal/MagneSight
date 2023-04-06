@@ -22,7 +22,8 @@ def login_page():
              ]
 
     # Create the main window
-    window = sg.Window('MagneSight', layout,size=(600,400),alpha_channel=0.83)
+    window = sg.Window('MagneSight', layout,size=(600,400),alpha_channel=0.83,icon=r'C:\Users\LENOVO\Desktop\ds-proj\code\aa.ico')
+    #window.set_icon(r'C:\Users\LENOVO\Desktop\ds-proj\code\aa.png')
 
     # Display the main window
     while True:
