@@ -17,7 +17,7 @@ def screen_3(name):
               ]
 
     # Create the main window
-    window = sg.Window('MagneSight', layout,size=(700,500),alpha_channel=0.85)
+    window = sg.Window('MagneSight', layout,size=(700,500),alpha_channel=0.85,icon=r' ')
 
     while True:
         event, values = window.read()
