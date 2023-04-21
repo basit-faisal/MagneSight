@@ -22,11 +22,14 @@ def screen_3(name):
 
     # Initialize the last selected directory path
     last_dir_path = ''
-
+    file_path = None
     while True:
+
         event, values = window.read()
+
         if event == sg.WIN_CLOSED:
             break
+
         if event == 'Add Data':
             # Open file explorer and get file path
             file_path = sg.popup_get_file('Select a CSV file', initial_folder=last_dir_path, file_types=(("CSV Files", "*.csv"),))
@@ -39,18 +42,22 @@ def screen_3(name):
                 #up_config_data(file_path)
                 
             continue
-        if event == 'Visualizations':
+        elif event == 'Visualizations':
+            if file_path == None:
+                sg.popup("Load Data First!")
             # Open file explorer and get file path
             #file_path = sg.popup_get_file('Select a CSV file', initial_folder=last_dir_path, file_types=(("CSV Files", "*.csv"),))
+            else:
 
-            if file_path:
+                if file_path:
                 # Update last selected directory path
-                last_dir_path = os.path.dirname(file_path)
+                    last_dir_path = os.path.dirname(file_path)
 
                 # Call the create_viz function from the viz module
-                create_viz(file_path)
-                
+                    create_viz(file_path)
+
             continue
+
 
     # Close the main window and exit the program
     window.close()
