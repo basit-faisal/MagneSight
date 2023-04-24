@@ -1,7 +1,8 @@
 import PySimpleGUI as sg
-from upload_data import *
+
 from viz import *
 import os
+from search_query import *
 
 def screen_3(name):
     sg.theme('DarkBlack')
@@ -14,7 +15,15 @@ def screen_3(name):
               [sg.Text('                                                               '),sg.Button('Add Data', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(10,2))],
               [sg.Text()],
               [sg.Text()],
-              [sg.Text('                                                               '),sg.Button('Visualizations', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(11,2))]
+              [sg.Text('                                                               '),sg.Button('Visualizations', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(11,2))],
+              [sg.Text()],
+              [sg.Text()],
+              [sg.Text()],
+              [sg.Text()],
+              [sg.Text()],
+              [sg.Text('                                                                                                                                            '),sg.Button('Next', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(11,2))]
+              
+              
               ]
 
     # Create the main window
@@ -56,6 +65,11 @@ def screen_3(name):
                 # Call the create_viz function from the viz module
                     create_viz(file_path)
 
+            continue
+        elif event == 'Next':
+            window.close()
+            final_screen()
+            
             continue
 
 
