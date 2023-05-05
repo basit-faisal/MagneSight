@@ -3,7 +3,6 @@ import PySimpleGUI as sg
 from viz import *
 import os
 from search_query import *
-
 def screen_3(name):
     sg.theme('DarkBlack')
 
@@ -68,9 +67,11 @@ def screen_3(name):
             continue
         elif event == 'Next':
             window.close()
-            final_screen()
+            FinalScreen(file_path)
+            #lazzy(file_path)
             
             continue
+
 
 
     # Close the main window and exit the program
