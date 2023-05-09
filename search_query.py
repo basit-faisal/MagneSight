@@ -3,8 +3,11 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor, plot_tree, DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
-from lazypredict.Supervised import LazyRegressor
+
 
 #prediction library needed
 
@@ -16,7 +19,7 @@ def FinalScreen(file_path):
               [sg.Text('                                               '),sg.Text('X - SEARCH', font=('Helvetica', 20, 'bold'),text_color='green')],
               [sg.Text()],
               [sg.Text()],
-              [sg.Text('   '),sg.Text('Username / ID',font=('Helvetica', 13, 'bold'),text_color='green'),sg.Input(key='name',size=(40,3),text_color='limegreen')],
+              [sg.Text('   '),sg.Text('Invoice ID',font=('Helvetica', 13, 'bold'),text_color='green'),sg.Input(key='name',size=(40,3),text_color='limegreen')],
               [sg.Text()],
               [sg.Text()],
               [sg.Text('                                                    '),sg.Button('Search', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(9,1))],
@@ -31,48 +34,56 @@ def FinalScreen(file_path):
         event, values = window.read()
         if event == sg.WIN_CLOSED:
             break
-        if event == 'Submit':
-            
-            
+        if event == 'Search':
+            # Get the search value entered by the user
+            search_value = values['name']
+            result_df = df[df['Invoice ID'] == search_value]
+            # Output all the other values in the row that matches the search value
+            if not result_df.empty:
+                output_str = f"Invoice ID: '{search_value}':\n{result_df.iloc[0]}"
+                sg.popup(output_str, title='Search Result')
+            else:
+                sg.popup(f"No rows found with that Invoice ID: '{search_value}'", title='Search Result')
 
             pass
         elif event == 'Predict':
-            df['gender_code'] = df['Gender'].map({'Male': 1, 'Female': 0})           
-
-            
+                      
+            # Linear Regression Model[COGS VS Gross INCome]                
             train = df.sample(frac=0.8, random_state=1)
             test = df.drop(train.index)
             model = LinearRegression()
-            
-            model.fit(train[['cogs','gender_code', 'Quantity']], train['gross income'])
-            print('Coefficients:', model.coef_)
-            print('Intercept:', model.intercept_)
-            y_pred = model.predict(test[['cogs', 'gender_code', 'Quantity']])
-            
+            model.fit(train[['cogs']], train['gross income'])
 
-            plt.scatter(test['gender_code'], test['gross income'],color='black')
-            plt.title('Linear Regression [Gender Affecting Gross Income]')
-            plt.xlabel('Gender')
-            plt.ylabel('gross income')
-            m, b = np.polyfit(test['gender_code'], test['gross income'], 1)
-            plt.plot(test['gender_code'], m*test['gender_code'] + b)
-            plt.show()
             
-            plt.scatter(test['cogs'], test['gross income'],color='black')
+            cogs_pred = np.linspace(0, 3000, 100)# adjust range and number of points as needed
+            # gender_code = np.full_like(cogs_pred, test['gender_code'].iloc[0])
+            # quant_pred = np.full_like(cogs_pred, test['Quantity'].iloc[0])
+            X_pred_cogs = pd.DataFrame({'cogs': cogs_pred})
+            y_pred_cogs = model.predict(X_pred_cogs)
+            
+            
+            plt.scatter(test['cogs'], test['gross income'], color='black', label='Actual')
+            plt.scatter(cogs_pred, y_pred_cogs, color='red', label='Predicted')
             plt.title('Linear Regression [COGS Affecting Gross Income]')
             plt.xlabel('Cost of Goods Sold')
-            plt.ylabel('gross income')
+            plt.ylabel('Gross Income')
             m, b = np.polyfit(test['cogs'], test['gross income'], 1)
-            plt.plot(test['cogs'], m*test['cogs'] + b)
-            plt.show()
+            plt.plot(cogs_pred, m*cogs_pred + b)
+            plt.legend()
+            plt.show()    
+            
+            
+            
+            # Decision Tree Model
+            
+            
+            
+            
+            
 
-            plt.scatter(test['Quantity'], test['gross income'],color='black')
-            plt.title('Linear Regression [Quantity Affecting Gross Income]')
-            plt.xlabel('Quantity')
-            plt.ylabel('gross income')
-            m, b = np.polyfit(test['Quantity'], test['gross income'], 1)
-            plt.plot(test['Quantity'], m*test['Quantity'] + b)
-            plt.show()
+
+
+
     window.close()
     
 
