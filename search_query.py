@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor, plot_tree, DecisionTreeClassifier, export_graphviz
 import graphviz
+from sklearn import tree
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
@@ -76,26 +77,37 @@ def FinalScreen(file_path):
             
             
             # Decision Tree Model
-            X =pd.get_dummies(df['Payment'])
-            y = df['Gender']           
+            
+            X =pd.get_dummies(df['Gender'])
+            y = df['Payment']
+            
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
             clf= DecisionTreeClassifier()
             clf = clf.fit(X_train, y_train)
-            dot_data = export_graphviz(clf, out_file=None,
-                           feature_names=X.columns,
-                           class_names=y.unique(),
-                           filled=True, rounded=True,
-                           special_characters=True)
 
-            graph = graphviz.Source(dot_data)
-            graph.view()
             
+            # dot_data = export_graphviz(clf, out_file=None,
+            #                feature_names=X.columns,
+            #                class_names=y.unique(),
+            #                filled=True, rounded=True,
+            #                special_characters=True)
+
+            # dot_data = dot_data.replace('digraph Tree {', 'digraph Tree { graph [label="Decision Tree for Gender and Payment"];\n')
+
+            # graph = graphviz.Source(dot_data)
+            # graph.render("decision_tree")
+
+
+            # graph.render(view=True)
             
-            # 
-            
-            
-            
-            
+            fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (3,3), dpi=200)
+            plot_tree(clf,
+               feature_names = X.columns, 
+               class_names=y.unique(),
+               filled = True);
+            plt.title("Decision Tree for Gender and Payment")
+            plt.show()
     window.close()
     
 
