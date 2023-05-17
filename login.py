@@ -3,26 +3,24 @@ from optionsscr import *
 import time
 
 def login_page():
-    sg.theme('DarkBlack')
 
-    layout = [[sg.Text()],
-              [sg.Text('                            '),sg.Text('Welcome to MagneSight!', font=('Helvetica', 20, 'bold'),text_color='green')],
-              [sg.Text()],
-              [sg.Text('                                                       '),sg.Text("LOGIN",font=('Helvetica', 17, 'bold'),text_color='green')],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text('   '),sg.Text('Username',font=('Helvetica', 13, 'bold'),text_color='green'),sg.Text('   '),sg.Input(key='name',size=(40,3),text_color='limegreen')],
-              [sg.Text()],
-              [sg.Text('   '),sg.Text('Password',font=('Helvetica', 13, 'bold'),text_color='green'),sg.Text('   '), sg.Input(key='pwd', password_char='*',size=(40,3),text_color='limegreen')],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text('                                                    '),sg.Button('Submit', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(9,1))]  
+
+    layout = [[sg.Text(background_color='#f1efe7')],
+              [sg.Text('                                                     ',background_color='#f1efe7'),sg.Image(filename='Magnesight.png', size=(100, 100), key='-IMAGE-', background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text('     ',background_color='#f1efe7'),sg.Text('Username',font=('League Spartan Thin', 15, 'bold'),text_color='#0f0f0f',background_color='#f1efe7'),sg.Text('   ',background_color='#f1efe7'),sg.Input(key='name',size=(40,3),text_color='#0f0f0f')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text('     ',background_color='#f1efe7'),sg.Text('Password',font=('League Spartan Thin', 15, 'bold'),text_color='#0f0f0f',background_color='#f1efe7'),sg.Text('   ',background_color='#f1efe7'), sg.Input(key='pwd', password_char='*',size=(40,3),text_color='#0f0f0f')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text('                                                    ', background_color='#f1efe7'),sg.Button('Submit', font=('League Spartan Thin', 12, 'bold'),button_color=('#f1efe7','#0f0f0f'),size=(10,4))]  
               
               
              ]
 
     # Create the main window
-    window = sg.Window('MagneSight', layout,size=(600,400),alpha_channel=0.83)
+    window = sg.Window('MagneSight', layout,size=(600,400),alpha_channel=0.83, background_color='#f1efe7')
 
     # Display the main window
     while True:
@@ -47,8 +45,6 @@ def login_page():
                     sg.popup('Incorrect name and password. please try again')
                     window['name'].update('')
                     window['pwd'].update('')
-
-
 
     # Close the main window and exit the program
     window.close()
