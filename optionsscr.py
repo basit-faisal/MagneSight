@@ -4,29 +4,29 @@ from viz import *
 import os
 from search_query import *
 def screen_3(name):
-    sg.theme('DarkBlack')
 
-    layout = [[sg.Text()],
-              [sg.Text('                                                   '),sg.Text(f'Welcome {name}!', font=('Helvetica', 20, 'bold'),text_color='green')],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text('                                                               '),sg.Button('Add Data', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(10,2))],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text('                                                               '),sg.Button('Visualizations', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(11,2))],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text()],
-              [sg.Text('                                                                                                                                            '),sg.Button('Next', font=('Helvetica', 12, 'bold'),button_color=('green','black'),size=(11,2))]
+    layout = [[sg.Text(background_color='#f1efe7')],
+              [sg.Text('                                               ', background_color='#f1efe7'),sg.Text(f'Welcome {name}!', font=('League Spartan Thin Black', 28, 'bold'),text_color='black', background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text('                                                        ', background_color='#f1efe7'),sg.Button('Add Data', font=('League Spartan Thin', 15, 'bold'),button_color=('#f1efe7','#000000'),size=(16,1),border_width=2, pad=(0,0))],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text('                                                         ', background_color='#f1efe7'),sg.Button('Visualizations', font=('League Spartan Thin', 15, 'bold'),button_color=('#f1efe7','#000000'),size=(16,1),border_width=2, pad=(0,0))],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text(background_color='#f1efe7')],
+              [sg.Text('                                                                                                                                            ', background_color='#f1efe7'),sg.Button('Next', font=('League Spartan Thin', 16, 'bold'),button_color=('#f1efe7','black'),size=(11,1))]
               
               
               ]
 
+
     # Create the main window
-    window = sg.Window('MagneSight', layout,size=(700,500),alpha_channel=0.85)
+    window = sg.Window('MagneSight', layout,size=(700,550),alpha_channel=0.85, background_color='#f1efe7')
 
     # Initialize the last selected directory path
     last_dir_path = ''
@@ -40,7 +40,7 @@ def screen_3(name):
 
         if event == 'Add Data':
             # Open file explorer and get file path
-            file_path = sg.popup_get_file('Select a CSV file', initial_folder=last_dir_path, file_types=(("CSV Files", "*.csv"),))
+            file_path = sg.popup_get_file('Select a CSV file', initial_folder=last_dir_path, file_types=(("CSV Files", "*.csv"),),background_color='#f1efe7',text_color='black' , button_color='black')
             
             if file_path:
                 # Update last selected directory path
@@ -52,7 +52,7 @@ def screen_3(name):
             continue
         elif event == 'Visualizations':
             if file_path == None:
-                sg.popup("Load Data First!")
+                sg.popup("Load Data First!",background_color='#f1efe7',text_color='black', button_color='black' )
             # Open file explorer and get file path
             #file_path = sg.popup_get_file('Select a CSV file', initial_folder=last_dir_path, file_types=(("CSV Files", "*.csv"),))
             else:
@@ -66,8 +66,12 @@ def screen_3(name):
 
             continue
         elif event == 'Next':
-            window.close()
-            FinalScreen(file_path)
+            if file_path == None:
+                sg.popup("Load Data First!",background_color='#f1efe7', text_color='black', button_color='black')
+            else:
+                window.close()
+                FinalScreen(file_path)    
+            
             #lazzy(file_path)
             
             continue
